@@ -1,0 +1,10 @@
+{
+  "name": "craft-calendar",
+  "version": "1.0.0",
+  "description": "A simple calendar app made with craft.",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Simeon Smith",
+  "license": "ISC"
+}
