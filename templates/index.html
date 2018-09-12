@@ -18,7 +18,7 @@
         {% set firstWeekDay = (year ~ '-' ~ month ~ '-01') |date('N') %}
         {% set calendarEventsQuery = craft.entries()
         .section('calendar')
-        .order('date') %}
+        .orderBy('date') %}
         {% set events = calendarEventsQuery.all() %}
         <tr class="weekdays">
             <th>Sunday</th>
