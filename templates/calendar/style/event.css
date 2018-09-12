@@ -1,0 +1,31 @@
+article.event {
+  padding: 1rem;
+}
+
+article.event p.date {
+  display: block;
+  color: rgb(255, 87, 87);
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+article.event p.time {
+  margin: 0;
+  font-size: 1.25rem;
+  color: rgb(0, 117, 226);
+}
+
+article.event div.location .location-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+article.event div.location .location-text {
+  font-size: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+article.event h1.title {
+  margin-top: 2rem;
+  font-size: 1.75rem;
+}

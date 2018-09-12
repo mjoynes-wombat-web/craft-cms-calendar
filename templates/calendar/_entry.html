@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ entry.title }} - Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="calendar/style/main.css" />
+</head>
+<body>
+  <h1>{{ entry.title }}</h1>
+  <p class="date">{{ entry.date|date('full') }}</p>
+  <p class="time">{{ entry.date|time('short') }}</p>
+  <p class="location">{{ entry.location }}</p>
+  <p class="details">{{ entry.details }}</p>
+</body>
+</html>
