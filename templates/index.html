@@ -7,6 +7,7 @@
     <title>Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style/home.css" />
 </head>
 
 <body>
@@ -42,7 +43,7 @@
                         <p class="date">{{ (year ~ '-' ~ month ~ '-' ~ i)|date('D, M j, Y') }}</p>
                         {% for event in events %}
                         {% if (year ~ '-' ~ month ~ '-' ~ i)|date('Y-m-d') == event.date|date('Y-m-d') %}
-                        <a href="./{{ event.slug }}" class="event-link">
+                        <a href="./event/{{ event.slug }}" class="event-link" target="_blank">
                         <div class="event">
                             <p class="time">{{ event.date|time('short') }}</p>
                             <p class="title">{{ event.title }}</p>
