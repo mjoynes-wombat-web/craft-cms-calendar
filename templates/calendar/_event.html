@@ -1,19 +1,23 @@
 {% extends "/_base.html" %}
 {% includeCssFile "/calendar/style/event.css" %}
 
-{% block title %}{{ entry.title }}{% endblock %}
+{% set eventId = number|number_format %}
+
+{% set event = craft.entries.id(eventId).first %}
+
+{% block title %}{{ event.title }}{% endblock %}
 
 {% block content %}
-  <article class="event">
-    <p class="date">{{ entry.eventDate|date('full') }}</p>
-    <p class="time">{{ entry.eventDate|time('short') }}</p>
-    <div class="location">
-      <p class="location-label">
-        Location:
-      </p>
-      <p class="location-text">{{ entry.location }}</p>
-    </div>
-    <h1 class="title">{{ entry.title }}</h1>
-    <p class="details">{{ entry.details }}</p>
-  </article>
+<article class="event">
+  <p class="date">{{ event.eventDate|date('full') }}</p>
+  <p class="time">{{ event.eventDate|time('short') }}</p>
+  <div class="location">
+    <p class="location-label">
+      Location:
+    </p>
+    <p class="location-text">{{ event.location }}</p>
+  </div>
+  <h1 class="title">{{ event.title }}</h1>
+  <p class="details">{{ event.details }}</p>
+</article>
 {% endblock %}
