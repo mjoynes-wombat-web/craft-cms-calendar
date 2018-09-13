@@ -1,3 +1,24 @@
+main.content nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+main.content nav ul li {
+  display: inline-block;
+  transition: transform 0.5s;
+  padding: 0 0.5rem;
+}
+
+main.content nav ul li:hover {
+  transform: translateY(-0.125rem);
+}
+
+main.content nav ul li a:link,
+main.content nav ul li a:visited {
+  text-decoration: none;
+  color: rgb(0, 117, 226);
+}
+
 table.calendar {
   width: 100%;
   border-collapse: collapse;
