@@ -1,5 +1,5 @@
 {% extends "/_base.html" %}
-{% includeCssFile "/style/home.css" %}
+{% do view.registerCssFile("/style/home.css") %}
 
 {% if year is not defined %}
     {% set year = now|date('yy') %}

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{% block title %}{% endblock %} - Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% includeCssFile "/style/main.css" %}
+  {% do view.registerCssFile("/style/main.css") %}
 </head>
 <body>
   <main class="content">

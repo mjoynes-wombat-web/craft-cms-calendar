@@ -1,12 +1,12 @@
 {% extends "/_base.html" %}
-{% includeCssFile "/calendar/style/event.css" %}
-{% includeCssFile "/calendar/style/template.css" %}
+{% do view.registerCssFile("/calendar/style/event.css") %}
+{% do view.registerCssFile("/calendar/style/template.css") %}
 
 {% set currentDate = date(year ~ '-' ~ month ~ '-' ~ day) %}
 
 {% set eventId = number|number_format %}
 
-{% set event = craft.entries.id(eventId).first %}
+{% set event = craft.entries.id(eventId).one() %}
 
 {% block title %}{{ event.title }}{% endblock %}
 
@@ -26,5 +26,5 @@
   <h1 class="title">{{ event.title }}</h1>
   <p class="details">{{ event.details }}</p>
 </article>
-<a href="/" class="back-link">Back to Calendar</a>
+<a href="/{{ currentDate|date('Y/m')}}" class="back-link">Back to Calendar</a>
 {% endblock %}
