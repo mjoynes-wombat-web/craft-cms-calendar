@@ -1,5 +1,5 @@
 {
-  "name": "craft-calendar",
+  "name": "craft-cms-calendar",
   "version": "1.0.0",
   "description": "A simple calendar app made with craft.",
   "main": "index.js",

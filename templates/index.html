@@ -6,21 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="style/home.css" />
+    {% includeCssFile "/style/main.css" %}
+    {% includeCssFile "/style/home.css" %}
 </head>
+
+{% if year is defined %}
+    {% set year = year %}
+{% else %}
+    {% set year = now|date('yy') %}
+{% endif %}
+
+{% if month is defined %}
+    {% set month = month %}
+{% else %}
+    {% set month = now|date('m') %}
+{% endif %}
+
+{% set firstDayOfMonth = (year ~ '-' ~ month ~ '-01') %}
+{% set daysInMonth = firstDayOfMonth|date('t') %}
+{% set firstWeekDay = firstDayOfMonth|date('N') %}
 
 <body>
     <h1>Calendar</h1>
+    <h2 class="month">{{ firstDayOfMonth|date('F Y') }}</h2>
     <table class="calendar">
-        {% set month = now|date('m') %}
-        {% set year = now|date('yy') %}
-        {% set daysInMonth = now|date('t') %}
-        {% set firstWeekDay = (year ~ '-' ~ month ~ '-01') |date('N') %}
-        {% set calendarEventsQuery = craft.entries()
-        .section('calendar')
-        .orderBy('date') %}
-        {% set events = calendarEventsQuery.all() %}
         <tr class="weekdays">
             <th>Sunday</th>
             <th>Monday</th>
@@ -36,20 +45,21 @@
             </td>
             {% endfor %}
             {% for i in 1..(daysInMonth) %}
-            <td class="day {% for event in events %}{% if (year ~ '-' ~ month ~ '-' ~ i)|date('Y-m-d') == event.date|date('Y-m-d') %}active {% endif %}{% endfor %}">
+            {% set currentDate = date(year ~ '-' ~ month ~ '-' ~ i) %}
+            {% set eventQuery = craft.entries.section('calendar').eventDate(['and', '>= '~currentDate|datetime('Y-m-d H:i:s'), '<'~(currentDate|date_modify('+1 day')|datetime('Y-m-d H:i:s'))]) %}
+                    {% set dayEvent=eventQuery.all() %}
+            <td class="day {% if dayEvent|length > 0 %}active{% endif %}">
                 <div class="wrapper">
                     <p class="date">{{ i }}</p>
                     <div class="events">
-                        <p class="date">{{ (year ~ '-' ~ month ~ '-' ~ i)|date('D, M j, Y') }}</p>
-                        {% for event in events %}
-                        {% if (year ~ '-' ~ month ~ '-' ~ i)|date('Y-m-d') == event.date|date('Y-m-d') %}
+                        <p class="date">{{ currentDate|date('D, M j, Y') }}</p>
+                        {% for event in dayEvent %}
                         <a href="./event/{{ event.slug }}" class="event-link" target="_blank">
                         <div class="event">
-                            <p class="time">{{ event.date|time('short') }}</p>
+                            <p class="time">{{ event.eventDate|time('short') }}</p>
                             <p class="title">{{ event.title }}</p>
                         </div>
                         </a>
-                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
