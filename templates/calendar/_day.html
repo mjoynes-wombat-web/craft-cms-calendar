@@ -1,0 +1,25 @@
+{% extends "/_base.html" %}
+{% includeCssFile "/calendar/style/day.css" %}
+{% includeCssFile "/calendar/style/template.css" %}
+
+{% set currentDate = date(year ~ '-' ~ month ~ '-' ~ day) %}
+{% set eventQuery = craft.entries.section('calendar').eventDate(['and', '>= '~currentDate|datetime('Y-m-d H:i:s'), '<'~(currentDate|date_modify('+1 day')|datetime('Y-m-d H:i:s'))]).orderBy('eventDate') %}
+{% set dayEvents=eventQuery.all() %}
+
+{% block title %}{{ currentDate|date('M d, Y') }}{% endblock %}
+
+{% block content %}
+<section class="day">
+  <h1 class="date">{{ currentDate|date('full') }}</h1>
+  {% for event in dayEvents %}
+    {% set eventDateSlug = event.eventDate|date('Y/m/d') %}
+    <a href="/{{ eventDateSlug }}/event/{{ event.id }}/{{ event.slug }}" class="event-link" target="_blank">
+      <div class="event">
+        <p class="time">{{ event.eventDate|time('short') }}</p>
+        <h2 class="title">{{ event.title }}</h2>
+      </div>
+    </a>
+  {% endfor %}
+</section>
+<a href="/" class="back-link">Back to Calendar</a>
+{% endblock %}
