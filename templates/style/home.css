@@ -24,13 +24,15 @@ table.calendar td.day {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-table.calendar td.day a.event-link:link {
+table.calendar td.day a.event-link:link,
+table.calendar td.day a.day-link:link {
   text-decoration: none;
 }
 
 table.calendar td.day div.wrapper {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 table.calendar td.day div.wrapper>p.date {
@@ -39,16 +41,28 @@ table.calendar td.day div.wrapper>p.date {
   color: rgb(73, 185, 255);
 }
 
-table.calendar td.day div.event {
-  transition: transform 0.5s;
+table.calendar td.day a.see-more-link {
+  display: block;
+  text-decoration: none;
+  color: rgb(0, 117, 226);
 }
 
-table.calendar td.day div.event:hover {
-  transform: scale(1.02);
+table.calendar td.day div.events {
+  flex: 1;
 }
 
 table.calendar td.day div.events>p.date {
   display: none;
+}
+
+table.calendar td.day div.event,
+table.calendar td.day a.see-more-link {
+  transition: transform 0.5s;
+}
+
+table.calendar td.day div.event:hover,
+table.calendar td.day a.see-more-link:hover {
+  transform: translateY(-0.125rem);
 }
 
 table.calendar td.day div.event p.time {

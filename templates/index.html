@@ -1,15 +1,11 @@
 {% extends "/_base.html" %}
 {% includeCssFile "/style/home.css" %}
 
-{% if year is defined %}
-    {% set year = year %}
-{% else %}
+{% if year is not defined %}
     {% set year = now|date('yy') %}
 {% endif %}
 
-{% if month is defined %}
-    {% set month = month %}
-{% else %}
+{% if month is not defined %}
     {% set month = now|date('m') %}
 {% endif %}
 
@@ -51,22 +47,36 @@
                 {% endfor %}
                 {% for i in 1..(daysInMonth) %}
                 {% set currentDate = date(year ~ '-' ~ month ~ '-' ~ i) %}
-                {% set eventQuery = craft.entries.section('calendar').eventDate(['and', '>= '~currentDate|datetime('Y-m-d H:i:s'), '<'~(currentDate|date_modify('+1 day')|datetime('Y-m-d H:i:s'))]) %}
-                        {% set dayEvent=eventQuery.all() %}
-                <td class="day {% if dayEvent|length > 0 %}active{% endif %}">
+                {% set eventQuery = craft.entries.section('calendar').eventDate(['and', '>= '~currentDate|datetime('Y-m-d H:i:s'), '<'~(currentDate|date_modify('+1 day')|datetime('Y-m-d H:i:s'))]).limit(3) %}
+                {% set dayEvents=eventQuery.all() %}
+                {% set currentDateSlug = currentDate|date('Y/m/d') %}
+                <td class="day {% if dayEvents|length > 0 %}active{% endif %}">
                     <div class="wrapper">
                         <p class="date">{{ i }}</p>
                         <div class="events">
                             <p class="date">{{ currentDate|date('D, M j, Y') }}</p>
-                            {% for event in dayEvent %}
-                            <a href="./event/{{ event.slug }}" class="event-link" target="_blank">
-                            <div class="event">
-                                <p class="time">{{ event.eventDate|time('short') }}</p>
-                                <p class="title">{{ event.title }}</p>
-                            </div>
-                            </a>
-                            {% endfor %}
+                            {% if dayEvents|length > 0 %}
+                                {% if dayEvents|length > 2 %}
+                                    {% set eventsToShow = 2 %}
+                                {% else %}
+                                    {% set eventsToShow = dayEvents|length %}
+                                {% endif %}
+                                {% for i in 0..(eventsToShow - 1) %}
+
+                                {% set event = dayEvents[i] %}
+                                {% set eventDateSlug = event.eventDate|date('Y/m/d') %}
+                                <a href="/{{ eventDateSlug }}/event/{{ event.id }}/{{ event.slug }}" class="event-link" target="_blank">
+                                    <div class="event">
+                                        <p class="time">{{ event.eventDate|time('short') }}</p>
+                                        <p class="title">{{ event.title }}</p>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            {% endif %}
                         </div>
+                        {% if dayEvents|length > 2 %}
+                            <a href="/{{ currentDateSlug }}" class="see-more-link">See More...</a>
+                        {% endif %}
                     </div>
                 </td>
                 {% if (firstWeekDay - 1 + i) % 7 == 0 %}
