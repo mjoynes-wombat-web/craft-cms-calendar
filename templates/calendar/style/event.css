@@ -1,5 +1,9 @@
-article.event {
+main {
   padding: 1rem;
+}
+
+article.event a.day-link:link {
+  text-decoration: none;
 }
 
 article.event p.date {
@@ -7,6 +11,11 @@ article.event p.date {
   color: rgb(255, 87, 87);
   font-size: 1.25rem;
   margin: 0.5rem 0;
+  transition: transform 0.5s;
+}
+
+article.event p.date:hover {
+  transform: translateY(-0.125rem);
 }
 
 article.event p.time {

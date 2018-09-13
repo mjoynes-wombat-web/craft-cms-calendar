@@ -1,5 +1,8 @@
 {% extends "/_base.html" %}
 {% includeCssFile "/calendar/style/event.css" %}
+{% includeCssFile "/calendar/style/template.css" %}
+
+{% set currentDate = date(year ~ '-' ~ month ~ '-' ~ day) %}
 
 {% set eventId = number|number_format %}
 
@@ -9,7 +12,10 @@
 
 {% block content %}
 <article class="event">
-  <p class="date">{{ event.eventDate|date('full') }}</p>
+  {% set eventDateSlug = event.eventDate|date('Y/m/d') %}
+  <a href="/{{ eventDateSlug }}" class="day-link">
+    <p class="date">{{ event.eventDate|date('full') }}</p>
+  </a>
   <p class="time">{{ event.eventDate|time('short') }}</p>
   <div class="location">
     <p class="location-label">
@@ -20,4 +26,5 @@
   <h1 class="title">{{ event.title }}</h1>
   <p class="details">{{ event.details }}</p>
 </article>
+<a href="/" class="back-link">Back to Calendar</a>
 {% endblock %}
