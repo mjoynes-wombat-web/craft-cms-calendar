@@ -6,7 +6,7 @@ table.calendar {
 table.calendar th {
   text-align: left;
   width: calc(100% / 7);
-  padding: 0.25rem;
+  padding: 0.5rem 0.25rem;
   vertical-align: bottom;
   color: rgb(255, 87, 87);
   font-size: 1.125rem;
